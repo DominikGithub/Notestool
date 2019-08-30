@@ -1,12 +1,14 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+require('dotenv').config()
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
 
-const MongoClient = require('mongodb').MongoClient;
 var dbo;
-var userPassword = 'NotesTool:looTsetoN';
-var mongoHost = 'notestoolmongo';
+var userPassword = process.env.userPassword;
+var mongoHost = process.env.mongoHost;
 
-var apiBackend = function(db){
+var apiBackend = function(){
 	/*
 	 * Web REST API backend setup.
 	 */
@@ -29,15 +31,15 @@ var apiBackend = function(db){
 				console.log(rslt);
 			});
 		}
-
 		res.send('New Note: ' + jsonBody);
 	});
 
-	app.delete('/note', function(req, res) {
-		dbo.collection('notes').remove({'_id': req.body._id}).toArray(function(err, docs) {
+	app.delete('/note', jsonParser, function(req, res) {
+		const _id = mongodb.ObjectId(req.body._id)
+		dbo.collection('notes').deleteOne({'_id': _id}, function(err, docs) {
 		    if(err) { console.error(err) }
-			console.log(req.body._id);
-		    res.send({'_id': req.body._id});
+			console.log('Remove: ' + req.body._id);
+		    res.send({'state': 'ok'});
 		});
 	});
 
@@ -46,7 +48,6 @@ var apiBackend = function(db){
 	});
 
 }
-
 
 MongoClient.connect('mongodb://'+userPassword+'@'+mongoHost,  { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
     if (err) throw err;

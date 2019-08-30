@@ -1,11 +1,15 @@
 #! /usr/bin/env python
 
+import os
 import sys
 import requests
 import json
 import emoji
+from dotenv import load_dotenv
+load_dotenv()
 
-URL = 'http://localhost:3000/note'
+HOST_PORT = os.getenv("HOST_PORT")
+URL = HOST_PORT + '/note'
 
 def cmd_add(text):
 	'''
@@ -39,7 +43,7 @@ def cmd_rm(idx):
 			# delete note
 			r = requests.delete(URL, json={'_id': _id})
 			return
-		raise Exception('Error: {} not found'.format(idx))
+	raise Exception('Error: {} not found'.format(idx))
 	
 def cmd_help():
 	'''
