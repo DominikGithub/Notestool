@@ -74,7 +74,7 @@ if __name__ == '__main__':
 			text_start = 2
 			text_input = ' '.join(sys.argv[text_start:])
 			print(emoji.emojize(":lemon:") + ' | ' + text_input)
-			#cmd_add(text_input)
+			cmd_add(text_input)
 			exit(0)
 		else:
 			print('Unknown command:', cmd)
