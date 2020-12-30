@@ -1,7 +1,5 @@
 #! /bin/sh
 
-#pipenv shell
-source ./noteclienv/bin/activate &&
-python notesClient.py $1 &&
+#docker build -t ntclient .
 
-exit
+docker run -it ntclient . $1
