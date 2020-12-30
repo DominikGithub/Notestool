@@ -5,7 +5,7 @@ services:
   notestoolapi:
     container_name: notestoolapi
     build:
-        context: .
+        context: ./backend
         dockerfile: Dockerfile
     ports:
        - 3000:3000
@@ -16,6 +16,8 @@ services:
     image: mongo
     container_name: notestoolmongo
     restart: always
+    volumes: 
+      - ./mongo_volume:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: NotesTool
       MONGO_INITDB_ROOT_PASSWORD: looTsetoN

@@ -5,16 +5,18 @@ const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 
 var dbo;
-var userPassword = process.env.userPassword;
-var mongoHost = process.env.mongoHost;
+const userPassword = process.env.userPassword;
+const username = process.env.username;
+const mongoHost = process.env.mongoHost;
 
 var apiBackend = function(){
 	/*
 	 * Web REST API backend setup.
 	 */
-	var app = express();
+	const app = express();
 	var jsonParser = bodyParser.json()
 
+	// list all notes
 	app.get('/note', function(req, res) {
 		dbo.collection('notes').find({}).toArray(function(err, docs) {
 		    if(err) { console.error(err) }
@@ -22,6 +24,7 @@ var apiBackend = function(){
 		});
 	});
 
+	// create new note
 	app.put('/note', jsonParser, function (req, res) {
 		var contentTxt = JSON.stringify(req.body.content);
 		console.log(contentTxt);
@@ -34,6 +37,7 @@ var apiBackend = function(){
 		res.send('New Note: ' + jsonBody);
 	});
 
+	// remove note
 	app.delete('/note', jsonParser, function(req, res) {
 		const _id = mongodb.ObjectId(req.body._id)
 		dbo.collection('notes').deleteOne({'_id': _id}, function(err, docs) {
@@ -43,13 +47,15 @@ var apiBackend = function(){
 		});
 	});
 
+	// start api
 	app.listen(3000, function () {
 		console.log('NotesTool app listening on port 3000!');
 	});
 
 }
 
-MongoClient.connect('mongodb://'+userPassword+'@'+mongoHost,  { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
+// Create db handler
+MongoClient.connect('mongodb://'+username+':'+userPassword+'@'+mongoHost,  { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
     if (err) throw err;
     dbo = db.db("notes");
 	apiBackend(dbo);

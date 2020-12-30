@@ -1,7 +1,7 @@
-#! /bin/bash
-#source name_Env/bin/activate
-# virtualenv is now active.
+#! /bin/sh
 
-pipenv shell
+#pipenv shell
+source ./noteclienv/bin/activate &&
+python notesClient.py $1 &&
 
-python notesClient.py
+exit
