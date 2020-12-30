@@ -7,6 +7,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("NotesCLI")
 import requests
+from requests.exceptions import ConnectionError
 import json
 import emoji
 from dotenv import load_dotenv
@@ -79,11 +80,14 @@ if __name__ == '__main__':
 	cli_parser = cli_args()
 	args = cli_parser.parse_args()
 
-	if args.add:
-		cmd_add(args.add)
-	if args.rm:
-		cmd_rm(int(args.rm))
-	if args.ls:
-		cmd_ls()
-	if args.c:
-		print(f"Endpoint: {URL}")
+	try:
+		if args.add:
+			cmd_add(args.add)
+		if args.rm:
+			cmd_rm(int(args.rm))
+		if args.ls:
+			cmd_ls()
+		if args.c:
+			print(f"Endpoint: {URL}")
+	except ConnectionError as connerr:
+		logger.info(f"Please start backend")

@@ -38,14 +38,13 @@ alias note='python <PWD>/client/notesClient.py'
 │   ├── backend.js
 │   ├── Dockerfile
 │   ├── package.json
+│   ├── .env.template
 │   └── package-lock.json
 ├── client
-│   ├── noteclienv
-│   │   ├── bin
-│   │   ├── lib
-│   │   └── pyvenv.cfg
+│   ├── noteclienv/
 │   ├── notesClient.py
 │   ├── note.sh
+│   ├── .env.template
 │   ├── Pipfile
 │   ├── Pipfile.lock
 │   └── requirements.txt
@@ -53,5 +52,6 @@ alias note='python <PWD>/client/notesClient.py'
 ├── docs
 │   └── notestoolscreenshot.png
 ├── makefile
+├── mongodb.env.template
 └── README.md
 ```

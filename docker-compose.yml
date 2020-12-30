@@ -18,9 +18,8 @@ services:
     restart: always
     volumes: 
       - ./mongo_volume:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: NotesTool
-      MONGO_INITDB_ROOT_PASSWORD: looTsetoN
+    env_file:
+      - mongodb.env
 
   notestoolmongo-express:
     image: mongo-express
@@ -29,7 +28,7 @@ services:
       - 8081:8081
     depends_on:
       - notestoolmongo
+    env_file:
+      - mongodb.env
     environment:
       ME_CONFIG_MONGODB_SERVER: notestoolmongo
-      ME_CONFIG_MONGODB_ADMINUSERNAME: NotesTool
-      ME_CONFIG_MONGODB_ADMINPASSWORD: looTsetoN

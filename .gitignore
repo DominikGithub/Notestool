@@ -1,7 +1,7 @@
 **/node_modules/**
 .directory
 
-.env
+*.env
 
 */package-lock.json
 */Pipfile.lock
