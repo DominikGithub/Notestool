@@ -9,6 +9,7 @@ verify_ssl = true
 requests = "*"
 emoji = "*"
 python-dotenv = "*"
+pyinquirer = "*"
 
 [requires]
 python_version = "3.7"
